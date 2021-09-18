@@ -105,7 +105,7 @@ COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
 # Override default nginx welcome page
-COPY www /usr/share/nginx/www
+COPY www /usr/share/nginx/html
 
 # Copy Scripts
 COPY docker-entrypoint.sh /docker-entrypoint.sh

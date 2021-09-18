@@ -8,7 +8,7 @@ if [[ -v LOCATION ]]; then
 fi
 
 # Always chown webroot for better mounting
-chown -Rf nginx:nginx /usr/share/nginx/www
+chown -Rf nginx:nginx /usr/share/nginx/html
 
 # Start supervisord and services
 /usr/local/bin/supervisord -n -c /etc/supervisord.conf
