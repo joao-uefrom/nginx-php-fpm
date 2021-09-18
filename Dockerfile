@@ -3,11 +3,11 @@ FROM debian:buster
 LABEL maintainer="João Fernandes <joao.fernandesds26@gmail.com>"
 
 # Let the container know that there is no tty
-ENV DEBIAN_FRONTEND noninteractive
-ENV NGINX_VERSION 1.19.10-1~buster
-ENV php_conf /etc/php/8.0/fpm/php.ini
-ENV fpm_conf /etc/php/8.0/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 2.0.13
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NGINX_VERSION=1.19.10-1~buster
+ENV php_conf=/etc/php/8.0/fpm/php.ini
+ENV fpm_conf=/etc/php/8.0/fpm/pool.d/www.conf
+ENV COMPOSER_VERSION=2.0.13
 
 # Install Basic Requirements
 RUN buildDeps='gcc make autoconf libc-dev zlib1g-dev pkg-config' ; \
@@ -99,17 +99,17 @@ RUN buildDeps='gcc make autoconf libc-dev zlib1g-dev pkg-config' ; \
     && rm -rf /var/lib/apt/lists/*
 
 # Supervisor config
-COPY ./supervisord.conf /etc/supervisord.conf
+COPY config/supervisord.conf /etc/supervisord.conf
 
 # Override nginx's default config
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY config/nginx.conf /etc/nginx/nginx.conf
 
 # Override default nginx welcome page
 COPY www /usr/share/nginx/www
 
 # Copy Scripts
-COPY ./start.sh /start.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 EXPOSE 80
 
-CMD ["/start.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
